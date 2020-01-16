@@ -5,13 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+	<meta name="referrer" content="never"/>
     <title>zhihu-app</title>
+	<style>
+		.bg{
+			background-color: rgb(246, 246, 246);
+		}
+		
+	</style>
   </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but zhihu-app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+  <body class="bg">
+    	<p  id="test" style="position:fixed;right:80px;bottom:100px;height: 100px;width: 100px;" v-if="document.documentElement.scrollTop != 0">回到顶部</p>
+		<script>
+		    test.onclick = function(){
+		        document.body.scrollTop = document.documentElement.scrollTop = 0;
+				
+		    }
+		</script> 
     <div id="app"></div>
+	<div class="bg">
+		
+	</div>
     <!-- built files will be auto injected -->
   </body>
 </html>

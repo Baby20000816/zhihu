@@ -1,10 +1,10 @@
 <template>
-	<div>
-		<div class="banner">
-			<!-- <img src="../assets/logo.png" alt="" /> -->
+	<div class="col-4">
+		<!-- <div class="banner">
+			<img src="../assets/logo.png" alt="" />
 			<h3>全部专题</h3>
-		</div>
-		<div class="container">
+		</div> -->
+		<div class="containerzhihu">
 			<div class="row" v-for="(item,index) in specials" :key="index">
 				<div class="col-4">
 					<img :src="item.banner" alt="" />
@@ -12,7 +12,8 @@
 				<div class="col-8">
 					<h3>{{item.title}}</h3>
 					<p class="meta">{{item.updated}}更新，{{item.viewCount}}次浏览</p>
-					<p class="introduction">{{item.introduction}}</p>
+					<p class="introduction">{{item.introduction.slice(0,50)}}...</p>
+					<br>
 					<span class="section" v-for="(section,index) in item.sections" :key="index">
 						{{section.sectionTitle}}
 					</span>
@@ -50,7 +51,7 @@
 			height: 60%;
 		}
 	}
-	.container{
+	.containerzhihu{
 		.row{
 			display: flex;
 			margin-bottom: 10px;
@@ -87,6 +88,8 @@
 					background-color: #eee;
 					padding: 3px;
 					margin: 5px;
+					size: 14px;
+					font-size: 14px;
 				}
 			}
 		}

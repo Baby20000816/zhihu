@@ -1,19 +1,57 @@
 <template>
 	<div>
 		<div class="containerzhihu">
-			<div class="row" v-for="(item,index) in specials.slice(0,count)" :key="index">
-				<div class="col-4">
-					<img :src="item.banner" alt="" />
-				</div>
-				<div class="col-8">
-					<h3>{{item.title}}</h3>
-					<p class="meta">{{item.updated}}更新，{{item.viewCount}}次浏览</p>
-					<p class="introduction">{{item.introduction}}</p>
-					<span class="section" v-for="(section,index) in item.sections" :key="index">
-						{{section.sectionTitle}}
-					</span>
+			<h2>最新专题</h2>
+			<div class="box-card flex col-12">
+				<div class="row-card" v-for="(item,index) in specials.slice(0,4)" :key="index">
+					<div class="card-box">
+						<div class="">
+							<img :src="item.banner" alt="" />
+						</div>
+						<div class="col-8">
+							<h3>{{item.title}}</h3>
+
+							<p>
+								<span class="meta gutter">{{item.updated}}更新</span>
+								<span class="meta">{{item.viewCount}}浏览</span>
+							</p>
+							<hr>
+							<p class="sub-title link">{{item.introduction.slice(0, 20)}}...</p>
+						</div>
+					</div>
 				</div>
 			</div>
+			<p class="buttum-position"><router-link to="/special/all">查看更多专题</router-link></p>
+		</div>
+		<div class="containerzhihu1">
+			<h2>圆桌讨论</h2>
+			<div class="box-card flex col-12">
+				<div class="row-card" v-for="(items,index) in roundtable.slice(0,4)" :key="index">
+					<div class="card-box">
+						<div class="background-size" v-bind:style="{ 'background-image': 'url(' + items.banner + ')','background-repeat':'no-repeat','background-size':'cover'}">
+							<!-- <img :src="items.banner" alt="" /> -->
+							<h3>{{items.name}}</h3>
+									
+							<p>
+								<!-- <span class="meta gutter">{{items.updated}}更新</span> -->
+								<span class="meta">{{items.visitsCount}}浏览</span>
+							</p>
+							<p class="sub-title link">{{items.includeCount}}位嘉宾参与</p>
+						</div>
+						<div class="col-8" >
+							<h3>{{items.name}}</h3>
+		
+							<p>
+								<!-- <span class="meta gutter">{{items.updated}}更新</span> -->
+								<span class="meta">{{items.visitsCount}}浏览</span>
+							</p>
+							<hr>
+							<p class="sub-title link">{{items.includeCount}}位嘉宾参与</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p class="buttum-position"><router-link to="/roundtable">圆桌讨论</router-link></p>
 		</div>
 	</div>
 </template>
@@ -24,6 +62,7 @@
 		data() {
 			return {
 				specials: [],
+				roundtable:[],
 				count: 5,
 				scroll: ''
 			};
@@ -33,11 +72,15 @@
 				console.log(res);
 				this.specials = res.data.data;
 			})
+			this.axios.get('http://localhost:8080/api/roundtable').then(res => {
+				console.log(res);
+				this.roundtable = res.data.data;
+			})
 		},
 		methods: {
 			loadMore() {
-							this.count=this.count+5
-						},
+				this.count = this.count + 5
+			},
 			scrollDs() {
 				//变量scrollTop是滚动条滚动时，距离顶部的距离
 				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -59,50 +102,94 @@
 </script>
 
 <style lang="scss" scoped>
-	.banner{
+	.banner {
 		border: 1px solid #d6d6d6;
 		box-shadow: 2px 5px 5px #ddd;
 		padding-left: 10%;
-		display:flex;
+		display: flex;
 		align-items: center;
-		.img{
+
+		.img {
 			height: 60%;
 		}
 	}
-	.containerzhihu{
-		.row{
+	.background-size{
+		// width: 100%;		 // height: 100%;
+	width: 100%;
+	height: 200px;
+
+	}
+	.box-card {
+		display: flex;
+		width: 60%;
+		height: 300px;
+		.row-card {
+			border: 1px solid #DDDDDD;
+			box-shadow: 1px 1px 1px #aaa;
+			width: 501px;
+			// height: 180px;
+			background-color: white;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 10px;
+			margin-right: 10px;
+			.card-box {
+				margin-left: -10px;
+				margin-top: -10px;
+				width: 500px;
+				img {
+					// width: 490px;
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					width: 100%;
+					height: 200px;
+				}
+			}
+		}
+
+	}
+
+	.containerzhihu {
+		.row {
 			display: flex;
 			margin-bottom: 10px;
 			border: 1px solid #d6d6d6;
 			border-radius: 4px;
 			height: 180px;
 			padding: 14px;
-			box-shadow: 0 1px 3px 0 rgba(26,26,26,0.1);
-			.col-4{
-				flex:  0 0 33%;
+			box-shadow: 0 1px 3px 0 rgba(26, 26, 26, 0.1);
+
+			.col-4 {
+				flex: 0 0 33%;
 				height: 100%;
-				img{
+
+				img {
 					width: 100%;
 					height: 100%;
-					border-radius:10px ;
+					border-radius: 10px;
 				}
 			}
-			.col-8{
+
+			.col-8 {
 				flex: 0 0 66%;
 				text-align: left;
 				line-height: 28px;
 				padding-left: 15px;
-				h3{
+
+				h3 {
 					font-weight: 700;
 				}
-				.meta{
+
+				.meta {
 					font-size: 13px;
 					color: #99a6c4;
 				}
-				.introduction{
+
+				.introduction {
 					font-size: 15px;
 				}
-				.section{
+
+				.section {
 					background-color: #eee;
 					padding: 3px;
 					margin: 5px;

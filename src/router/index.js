@@ -9,13 +9,19 @@ import Follow from '../views/Follow.vue'
 import Hot from '../views/Hot.vue'
 import QuestionWaiting from '../views/QuestionWaiting.vue'
 import Login from '../views/Login.vue'
+import RoundTable from '../views/RoundTable.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
 		path: '/',
 		component: Nav,
-		children: [{
+		children: [
+			{
+				path: '/roundtable',
+				component: RoundTable
+			},
+			{
 				path: '/',
 				redirect: 'home'
 			},

@@ -1,17 +1,6 @@
 <template>
 	<div class="row">
-		<!-- <div class="container">
-			<div class="row" v-for="(item,index) in specials" :key="index">
-				<div class="col-4">
-					<img :src="item.banner" alt="" />
-				</div>
-				<div class="col-8">
-					<h3>{{item.title}}</h3>
-					<p class="meta">{{item.updated}}更新，{{item.viewCount}}次浏览</p>
-					<p class="introduction">{{item.introduction.slice(0, 20)}}...</p>
-				</div>
-			</div>
-		</div> -->
+
 		<div class="col-10">
 			<div v-for="(item, index) in specials.slice(0,count)" :key="index" class="col-12">
 				<div class="media-wraaper ">
@@ -19,22 +8,20 @@
 						<img :src="item.banner" class="reimg" />
 					</div>
 					<div class="media-middle flex flex-around flex-left">
-						{{item.title}}
+						<p>{{item.title}}</p>
 						<p class="sub-title link">{{item.introduction.slice(0, 20)}}...</p>
 						<p>
 							<span class="meta gutter">{{item.updated}}更新</span>
 							<span class="meta">{{item.viewCount}}浏览</span>
 						</p>
+						<br>
+						<!-- <span class="section" v-for="(section,index) in item.sections" :key="index">
+							{{section.sectionTitle}}
+						</span> -->
 					</div>
 				</div>
 			</div>
 		</div>
-	<!-- 	<div class="col-4">
-
-			<div class="col-12 border box">
-
-			</div>
-		</div> -->
 	</div>
 </template>
 

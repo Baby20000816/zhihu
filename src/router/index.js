@@ -10,6 +10,7 @@ import Hot from '../views/Hot.vue'
 import QuestionWaiting from '../views/QuestionWaiting.vue'
 import Login from '../views/Login.vue'
 import RoundTable from '../views/RoundTable.vue'
+import Favorite from '../views/Favorite.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,10 @@ const routes = [{
 			{
 				path: '/roundtable',
 				component: RoundTable
+			},
+			{
+				path: '/favorite',
+				component: Favorite
 			},
 			{
 				path: '/',

@@ -21,26 +21,28 @@
 					</div>
 				</div>
 			</div>
-			<p class="buttum-position"><router-link to="/special/all">查看更多专题</router-link></p>
+			<p class="buttum-position">
+				<router-link to="/special/all">查看更多专题</router-link>
+			</p>
 		</div>
 		<div class="containerzhihu1">
 			<h2>圆桌讨论</h2>
 			<div class="box-card flex col-12">
 				<div class="row-card" v-for="(items,index) in roundtable.slice(0,4)" :key="index">
 					<div class="card-box">
-						<div class="background-size" v-bind:style="{ 'background-image': 'url(' + items.banner + ')','background-repeat':'no-repeat','background-size':'cover'}">
+						<div class="background-size" v-bind:style="{ 'background-image': 'url(' + items.tinyBanner + ')','background-repeat':'no-repeat','background-size':'cover'}">
 							<!-- <img :src="items.banner" alt="" /> -->
 							<h3>{{items.name}}</h3>
-									
+
 							<p>
 								<!-- <span class="meta gutter">{{items.updated}}更新</span> -->
 								<span class="meta">{{items.visitsCount}}浏览</span>
 							</p>
 							<p class="sub-title link">{{items.includeCount}}位嘉宾参与</p>
 						</div>
-						<div class="col-8" >
+						<div class="col-8">
 							<h3>{{items.name}}</h3>
-		
+
 							<p>
 								<!-- <span class="meta gutter">{{items.updated}}更新</span> -->
 								<span class="meta">{{items.visitsCount}}浏览</span>
@@ -51,7 +53,34 @@
 					</div>
 				</div>
 			</div>
-			<p class="buttum-position"><router-link to="/roundtable">圆桌讨论</router-link></p>
+			<p class="buttum-position">
+				<router-link to="/roundtable">圆桌讨论</router-link>
+			</p>
+		</div>
+
+		<div class="containerzhihu1">
+			<h2>收藏夹</h2>
+			<div class="box-card1 flex col-12">
+				<div class="row-card1" v-for="(items,indexs) in favorite.slice(0,4)" :key="indexs">
+					<div class="card-box1">
+						<h3>{{items.title}}</h3>
+						<div>
+							<img :src="items.creatorAvatar" alt="" />
+							{{items.creatorName}}创建 {{items.followers}}人关注
+							<hr>
+						</div>
+						<div class="col-8" >
+							<p>{{items.questionTitle}}</p>
+							<p>{{items.answerAuthorName}}:{{items.answerContent.slice(0,20)}}...</p>
+							<p>回答  {{items.voteupCount}}人赞同·{{items.commentCount}}人评论</p>
+							<p>已收藏{{items.totalCount}}条内容</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p class="buttum-position1">
+				<router-link to="/favorite">收藏夹</router-link>
+			</p>
 		</div>
 	</div>
 </template>
@@ -62,8 +91,12 @@
 		data() {
 			return {
 				specials: [],
-				roundtable:[],
+				roundtable: [],
+				favorite: [],
+				user: [],
 				count: 5,
+				start: 0,
+				end: 2,
 				scroll: ''
 			};
 		},
@@ -72,9 +105,17 @@
 				console.log(res);
 				this.specials = res.data.data;
 			})
-			this.axios.get('http://localhost:8080/api/roundtable').then(res => {
+			this.axios.get('http://localhost:8080/api/roundtable/all').then(res => {
 				console.log(res);
 				this.roundtable = res.data.data;
+			})
+			this.axios.get('http://localhost:8080/api/user').then(res => {
+				console.log(res);
+				this.user = res.data.data;
+			})
+			this.axios.get('http://localhost:8080/api/favorite').then(res => {
+				console.log(res);
+				this.favorite = res.data.data;
 			})
 		},
 		methods: {
@@ -113,16 +154,26 @@
 			height: 60%;
 		}
 	}
-	.background-size{
+
+	.pictures {
+		img{
+			width: 10px;
+			height: 10px;
+		}
+	}
+
+	.background-size {
 		// width: 100%;		 // height: 100%;
-	width: 100%;
-	height: 200px;
+		width: 100%;
+		height: 200px;
 
 	}
+
 	.box-card {
 		display: flex;
 		width: 60%;
 		height: 300px;
+
 		.row-card {
 			border: 1px solid #DDDDDD;
 			box-shadow: 1px 1px 1px #aaa;
@@ -133,10 +184,12 @@
 			padding: 10px;
 			margin-bottom: 10px;
 			margin-right: 10px;
+
 			.card-box {
 				margin-left: -10px;
 				margin-top: -10px;
 				width: 500px;
+
 				img {
 					// width: 490px;
 					border-top-left-radius: 5px;
@@ -147,6 +200,38 @@
 			}
 		}
 
+	}
+	.box-card1 {
+		display: flex;
+		width: 60%;
+		height: 300px;
+	
+		.row-card1 {
+			border: 1px solid #DDDDDD;
+			box-shadow: 1px 1px 1px #aaa;
+			width: 501px;
+			// height: 180px;
+			background-color: white;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 10px;
+			margin-right: 10px;
+	
+			.card-box1 {
+				margin-left: -10px;
+				margin-top: -10px;
+				width: 500px;
+	
+				img {
+					// width: 490px;
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					width: 20px;
+					height: 20px;
+				}
+			}
+		}
+	
 	}
 
 	.containerzhihu {
@@ -196,5 +281,16 @@
 				}
 			}
 		}
+	}
+	.buttum-position1{
+		margin-top: 10px;
+		margin-bottom: auto;
+		margin-left: auto;
+		margin-right: auto;
+		cursor: pointer;
+		border: 2px solid #DDDDDD;
+		border-radius: 10px;
+		background-color: white;
+		font-size: 10px;
 	}
 </style>

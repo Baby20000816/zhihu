@@ -16,7 +16,8 @@
 						<router-link to="/question/waiting">等你来答</router-link>
 					</li>
 					<li class="nav-item abs-center-right">
-						<router-link to="/login">登录</router-link>
+						<img width="30" height="30" :src="user.avatar" v-if="token" />
+						<router-link to="/login" v-else>登录</router-link>
 					</li>
 				</ul>
 			</div>
@@ -30,7 +31,11 @@
 	export default {
 		name: 'nav',
 		data() {
-			return {};
+			return {
+				flag:true,
+				token:this.$store.state.token,
+				user:this.$store.state.user,
+			};
 		},
 		created() {
 

@@ -25,14 +25,14 @@
 
 <script>
 	export default {
-		name: 'special',
+		name: 'favorite',
 		data() {
 			return {
 				specials: []
 			};
 		},
 		created() {
-			this.axios.get('http://localhost:8080/api/special/all').then(res => {
+			this.axios.get('http://localhost:8080/api/favorite').then(res => {
 				console.log(res);
 				this.specials = res.data.data;
 			})
